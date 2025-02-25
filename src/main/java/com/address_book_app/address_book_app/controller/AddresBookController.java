@@ -1,6 +1,7 @@
 package com.address_book_app.address_book_app.controller;
 
-import org.springframework.http.HttpStatus;
+import com.address_book_app.address_book_app.service.AddressBookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,34 +9,37 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/address-book")
 public class AddresBookController {
 
+    @Autowired
+    AddressBookService addressBookService;
+
     @GetMapping(value = {"", "/"})
     public ResponseEntity<String> getAllAddressBook(){
-        return new ResponseEntity("get all address book", HttpStatus.OK);
+        return addressBookService.getAllAddressBook();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<String> getAddressBookById(@PathVariable String id){
-        return new ResponseEntity("get address book of id "+id, HttpStatus.OK);
+        return addressBookService.getAddressBookById(id);
     }
 
     @PostMapping("")
     public ResponseEntity<String> createAddressBook(){
-        return new ResponseEntity("create address book", HttpStatus.OK);
+        return addressBookService.createAddressBook();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateAddressBook(@PathVariable String id){
-        return new ResponseEntity("update address book of id "+id, HttpStatus.OK);
+        return addressBookService.updateAddressBook(id);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAddressBook(@PathVariable String id){
-        return new ResponseEntity("delete address book of id "+id, HttpStatus.OK);
+        return addressBookService.deleteAddressBook(id);
     }
 
     @DeleteMapping(value = {"", "/"})
     public ResponseEntity<String> deleteAllAddressBook(){
-        return new ResponseEntity("delete all address book", HttpStatus.OK);
+        return addressBookService.deleteAllAddressBook();
     }
 
 }

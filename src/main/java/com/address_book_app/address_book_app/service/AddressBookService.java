@@ -1,6 +1,7 @@
 package com.address_book_app.address_book_app.service;
 
 import com.address_book_app.address_book_app.dto.AddressBookDto;
+import com.address_book_app.address_book_app.exception.AddressBookNotFoundException;
 import com.address_book_app.address_book_app.model.AddressBook;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class AddressBookService {
         for (AddressBook addressBook : addressBooks){
             if (addressBook.getName().equals(name)) return new ResponseEntity<>(addressBook, HttpStatus.FOUND);
         }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        throw new AddressBookNotFoundException(name);
     }
 
     public ResponseEntity<AddressBook> createAddressBook(AddressBookDto addressBookDto) {
@@ -38,7 +39,7 @@ public class AddressBookService {
                 return new ResponseEntity<>(addressBooks.get(i), HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        throw new AddressBookNotFoundException(id);
     }
 
     public ResponseEntity<String> deleteAddressBook(Long id) {
@@ -48,7 +49,7 @@ public class AddressBookService {
                 return new ResponseEntity<>("Deleted successfully", HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("Unable to delete address book "+id, HttpStatus.NOT_FOUND);
+        throw new AddressBookNotFoundException(id);
     }
 
     public ResponseEntity<String> deleteAllAddressBook() {

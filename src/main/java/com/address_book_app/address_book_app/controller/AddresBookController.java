@@ -3,6 +3,7 @@ package com.address_book_app.address_book_app.controller;
 import com.address_book_app.address_book_app.dto.AddressBookDto;
 import com.address_book_app.address_book_app.model.AddressBook;
 import com.address_book_app.address_book_app.service.AddressBookService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,13 +32,13 @@ public class AddresBookController {
     }
 
     @PostMapping("")
-    public ResponseEntity<AddressBook> createAddressBook(@RequestBody AddressBookDto addressBookDto){
+    public ResponseEntity<AddressBook> createAddressBook(@Valid @RequestBody AddressBookDto addressBookDto){
         log.info("create address book using {}", addressBookDto);
         return addressBookService.createAddressBook(addressBookDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AddressBook> updateAddressBook(@PathVariable String id, @RequestBody AddressBookDto addressBookDto){
+    public ResponseEntity<AddressBook> updateAddressBook(@PathVariable String id, @Valid @RequestBody AddressBookDto addressBookDto){
         log.info("update address book of id {}", id, "with new address book as", addressBookDto);
         return addressBookService.updateAddressBook(Long.parseLong(id), addressBookDto);
     }
